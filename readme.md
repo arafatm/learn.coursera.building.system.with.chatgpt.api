@@ -64,48 +64,29 @@ system over time.
 
 ## Language Models, the Chat Format and Tokens  
 
-
-### Transcript
+[Jupyter Notebook](l1.ipynb)
 
 In this first video, I'd like to share with you an overview of how LLMs, Large
-Language Models, work.
+Language Models, work. We'll go into how they are trained, as well as details
+like the tokenizer and how that can affect the output of when you prompt an
+LLM.
 
-We'll go into how they are trained, as well as details like the tokenizer and
-how that can affect the output of when you prompt an LLM.
-
-And we'll also take a look at the chat format for LLMs, which is a way of
-specifying both system as well as user messages and understand what you can do
-with that capability. Let's take a look. First, how does a Large Language Model
-work? You're probably familiar with the text generation process where you can
-give a prompt, "I love eating", and ask an LLM to fill in what the things are
-likely completions given this prompt. And it may say, "Bagels with cream
-cheese, or my mother's meatloaf, or out with friends".
-
-But how did the model learn to do this? The main tool used to train an LLM is
-actually supervised learning.
+The main tool used to train an LLM is actually supervised learning.
 
 In supervised learning, a computer learns an input-output or X or Y mapping
 using labeled training data. So for example, if you're using supervised
 learning to learn to classify the sentiment of restaurant reviews, you might
-collect a training set like this, where a review like, "The pastrami sandwich
+collect a training set like this
+
+"The pastrami sandwich
 is great!", is labeled as a positive sentiment review, and so on.
 
 And "Service was slow, the food was so-so. ", it was negative, and "The earl
 grey tea was fantastic. ", has a positive label.
 
-By the way, both Isa and I were born in the UK, and so both of us like our earl
-grey tea.
-
 And so the process for supervised learning is typically to get labeled data and
-then train AI model on data.
-
-And after training, you can then deploy and call the model and give it a new
-restaurant review like best pizza I've ever had.
-
-You hopefully output that as a positive sentiment.
-
-It turns out that supervised learning is a core building block for training
-Large Language Models.
+then train AI model on data. And after training, you can then deploy and call
+the model and give it a new restaurant review like best pizza I've ever had.
 
 Specifically, a Large Language Model can be built by using supervised learning
 to repeatedly predict the next word.
@@ -117,6 +98,9 @@ fragment, "My favorite food is a", if you want to predict the next word in this
 case was "bagel", or given the sentence fragment or sentence prefix, "My
 favorite food is a bagel", the next word in this case would be "with", and so
 on.
+
+| Input x | Output y |
+| The pastrami s
 
 And given a large training set of hundreds of billions or sometimes even more
 words, you can then create a massive training set where you can start off with
