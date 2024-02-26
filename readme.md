@@ -62,7 +62,7 @@ So I'll also share with you what the process of developing an LLM-based
 application feels like, and some best practices for evaluating and improving a
 system over time.
 
-## Language Models, the Chat Format and Tokens  
+## 02 Language Models, the Chat Format and Tokens  
 
 In this first video, I'd like to share with you an overview of how LLMs, Large
 Language Models, work. We'll go into how they are trained, as well as details
@@ -277,13 +277,13 @@ If you want to set the tone, to tell it to have a one sentence long output,
 then in the system message, I can say all your responses must be one sentence
 long.
 
-## Token count
+### Token count
 
 To view prompt, completion, and total tokens see the `token_dict` return
 
-## Tip: Use dotenv
+### Tip: Use dotenv
 
-## Prompting is revolutionizing AI development
+### Prompting is revolutionizing AI development
 
 Lastly, I think the degree to which prompting is revolutionizing AI application
 development is still underappreciated.
@@ -335,3 +335,5 @@ But for applications to which this does apply, the fact that AI components can
 be built so quickly, is changing the workflow of how the entire system might be
 built. Building an entire system might still take days or weeks or something,
 but at least this piece of it can be done much faster.
+
+## 03 Classification
