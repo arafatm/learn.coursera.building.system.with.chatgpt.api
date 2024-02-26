@@ -64,8 +64,6 @@ system over time.
 
 ## Language Models, the Chat Format and Tokens  
 
-[Jupyter Notebook](l1.ipynb)
-
 In this first video, I'd like to share with you an overview of how LLMs, Large
 Language Models, work. We'll go into how they are trained, as well as details
 like the tokenizer and how that can affect the output of when you prompt an
@@ -78,83 +76,87 @@ using labeled training data. So for example, if you're using supervised
 learning to learn to classify the sentiment of restaurant reviews, you might
 collect a training set like this
 
-"The pastrami sandwich
-is great!", is labeled as a positive sentiment review, and so on.
+| Input x                               | Output y |
+| --                                    | --       |
+| The pastrami sandwich is great!       | Positive |
+| Service was slow, the food was so-so. | Negative |
+| The earl grey tea was fantastic       | Positive |
+| Best pizza I've ever had              | Positive |
 
-And "Service was slow, the food was so-so. ", it was negative, and "The earl
-grey tea was fantastic. ", has a positive label.
+Specifically, a *Large Language Model can be built by using supervised learning
+to repeatedly predict the next word.*
 
-And so the process for supervised learning is typically to get labeled data and
-then train AI model on data. And after training, you can then deploy and call
-the model and give it a new restaurant review like best pizza I've ever had.
+Given "My favorite food is a bagel with cream cheese and lox." the sentence is
+turned into a sequence of training examples, where given a sentence fragment, 
 
-Specifically, a Large Language Model can be built by using supervised learning
-to repeatedly predict the next word.
-
-Let's say that in your training sets of a lot of text data, you have to
-sentence, "My favorite food is a bagel with cream cheese and lox. ". Then this
-sentence is turned into a sequence of training examples, where given a sentence
-fragment, "My favorite food is a", if you want to predict the next word in this
-case was "bagel", or given the sentence fragment or sentence prefix, "My
-favorite food is a bagel", the next word in this case would be "with", and so
-on.
-
-| Input x | Output y |
-| The pastrami s
+| Input x                          | Output y |
+| --                               | --       |
+| My favorite food is a            | bagel    |
+| My favorite food is a bagel      | with     |
+| My favorite food is a bagel with | cream    |
 
 And given a large training set of hundreds of billions or sometimes even more
 words, you can then create a massive training set where you can start off with
 part of a sentence or part of a piece of text and repeatedly ask the language
 model to learn to predict what is the next word.
 
-So today there are broadly two major types of Large Language Models. The first
-is a "Base LLM" and the second, which is what is increasingly used, is the
-"Instruction Tuned LLM".
+So today there are broadly two major types of Large Language Models. 
+- The first is a `Base LLM` and 
+- the second, which is what is increasingly used, is the `Instruction Tuned LLM`.
 
-So the base LLM repeatedly predicts the next word based on text training data.
-And so if I give it a prompt, "Once upon a time there was a unicorn", then it
-may, by repeatedly predicting one word at a time, come up with a completion
-that tells a story about a unicorn living in a magical forest with all her
-unicorn friends.
+### Base LLM
 
+> Predicts next word, based on text training data
+
+Given input: "Once upon a time there was a unicorn"
+- Then it may, by repeatedly predicting one word at a time, come up with a
+  completion that tells a story about a unicorn living in a magical forest with
+  all her unicorn friends.
  
-Now, a downside of this is that if you were to prompt it with "What is the
+**Downside** of this is that if you were to prompt it with "What is the
 capital of France?", quite possible that on the internet there might be a list
 of quiz questions about France. So it may complete this with "What is France's
 largest city, what is France's population?", and so on.
 
-But what you really want is you want it to tell you what is the capital of
+But __what you really want is you want__ it to tell you what is the capital of
 France, probably, rather than list all these questions.
 
-So an Instruction Tuned LLM instead tries to follow instructions and will
-hopefully say, "The capital of France is Paris. ". How do you go from a Base
-LLM to an Instruction Tuned LLM? This is what the process of training an
-Instruction Tuned LLM, like ChatGPT, looks like.
+### Instruction Tuned LLM 
 
-You first train a Base LLM on a lot of data, so hundreds of billions of words,
-maybe even more. And this is a process that can take months on a large
-supercomputing system.
+> Instead tries to follow instructions
 
-After you've trained the Base LLM, you would then further train the model by
-fine-tuning it on a smaller set of examples, where the output follows an input
-instruction. And so, for example, you may have contractors help you write a lot
-of examples of an instruction, and then a good response to an instruction.
+Will hopefully say, "The capital of France is Paris. ". 
 
-And that creates a training set to carry out this additional fine-tuning. So
-that learns to predict what is the next word if it's trying to follow an
-instruction. After that, to improve the quality of the LLM's output, a common
-process now is to obtain human ratings of the quality of many different LLM
-outputs on criteria, such as whether the output is helpful, honest, and
-harmless.
+### Base -> Instruction Tuned
 
-And you can then further tune the LLM to increase the probability of its
-generating the more highly rated outputs. And the most common technique to do
-this is RLHF, which stands for Reinforcement Learning from Human Feedback. And
-whereas training the Base LLM can take months, the process of going from the
-Base LLM to the Instruction Tuned LLM can be done in maybe days on a much more
-modest size data sets, and much more modest size computational resources.
+Steps:
+1. You first train a Base LLM on a lot of data, so hundreds of billions of
+   words, maybe even more. And this is a _process that can take months_ on a
+   large supercomputing system.
+2. Further train the model by fine-tuning it on a smaller set of examples,
+   where the _output follows an input instruction_. And so, for example, you
+   may have contractors help you write a lot of examples of an instruction, and
+   then a good response to an instruction.
+3. And that creates a training set to carry out this additional fine-tuning. So
+   that learns to predict what is the next word if it's trying to follow an
+   instruction. After that, to improve the quality of the LLM's output, a
+   _common process now is to obtain human ratings_ of the quality of many
+   different LLM outputs on criteria, such as whether the output is helpful,
+   honest, and harmless.
+4. And you can then further tune the LLM to increase the probability of its
+   generating the more highly rated outputs. And the _most common technique to
+   do this is RLHF_, which stands for Reinforcement Learning from Human
+   Feedback. And whereas training the Base LLM can take months, the process of
+   going from the Base LLM to the Instruction Tuned LLM can be done in maybe
+   days on a much more modest size data sets, and much more modest size
+   computational resources.
 
  
+### Jupyter Notebook
+
+[Jupyter Notebook](l1.ipynb)
+
+
 So this is how you would use an LLM. I'm gonna import a few libraries. I'm
 going to load my OpenAI key here. I'll say a little bit more about this later
 in this video.
