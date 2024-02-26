@@ -1,11 +1,10 @@
 ---
 created: 2024-02-25T18:07:42 (UTC -08:00)
-tags: []
-source: https://www.coursera.org/learn/building-systems-with-the-chatgpt-api-project/ungradedLti/K3PN1/building-systems-with-the-chatgpt-api
+tags: ai, chatgpt, openai, api
+source: https://learn.deeplearning.ai/chatgpt-building-system/
 author: Andrew Ng
 title: Building Systems with the ChatGPT API | Coursera
 ---
-
 
 In **Building Systems With The ChatGPT API,** you will learn how to automate
 complex workflows using chain calls to a large language model. Unlock new
