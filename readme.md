@@ -156,38 +156,11 @@ Steps:
 
 [Jupyter Notebook](l1.ipynb)
 
+:warning: Note in the example where we reverse "lollipop", we get an incorrect answer.
 
-So this is how you would use an LLM. I'm gonna import a few libraries. I'm
-going to load my OpenAI key here. I'll say a little bit more about this later
-in this video.
-
-And here's a helper function to get a completion given a prompt.
-
-If you have not yet installed the OpenAI package on your computer, you might
-have to run pip install OpenAI. But I already have it installed here, so I
-won't run that.
-
-And let me hit Shift-Enter to run these. And now I can set "response =
-get_completion". What is the capital of France? And hopefully it will give me a
-good result.
-
-Now, in the description of the Large Language Model so far, I talked about it
-as predicting one word at a time, but there's actually one more important
-technical detail.
-
-If you were to tell it, take the letters in the word lollipop, and reverse
-them, this seems like an easy task, maybe like a four-year-old could do this
-task.
-
-But if you were to ask ChatGPT to do this, it actually outputs a somewhat
-garbled whatever this is.
-
-This is not L-O-L-I-P-O-P, this is not lollipop's letters reversed. So why is
-ChatGPT unable to do what seems like a relatively simple task? It turns out
-that there's one more important detail for how a Large Language Model works,
-which is it doesn't actually repeatedly predict the next word, it instead
-repeatedly predicts the next token.
-
+It turns out that there's one more important detail for how a Large Language
+Model works, which is it doesn't actually repeatedly predict the next word, it
+__instead repeatedly predicts the next token__.
  
 And what an LLM actually does is it will take a sequence of characters, like
 "Learning new things is fun!", and group the characters together to form tokens
@@ -210,9 +183,8 @@ this down into three tokens, "l" and "oll" and "ipop".
 And because ChatGPT isn't seeing the individual letters, is instead seeing
 these three tokens, it's more difficult for it to correctly print out these
 letters in reverse order.
-
  
-So here's a trick you can use to fix this.
+__So here's a trick you can use to fix this__.
 
 If I were to add dashes to the word dashes, between these letters, and spaces
 would work too, or other things would work too, and tell it to take the letters
@@ -225,39 +197,64 @@ it easier for it to see the individual letters and print them out in reverse
 order.
 
 So if you ever want to use ChatGPT to play a word game, like word or scrabble
-or something, this nifty trick helps it to better see the individual letters of
-the words.
-
+or something, this nifty trick _helps it to better see the individual letters of
+the words_.
  
-For the English language, one token roughly on average, corresponds to about
-four characters or about three quarters of a word.
+For the English language, __one token roughly on average__, _corresponds to about
+four characters or about three quarters of a word_.
 
 And so different Large Language Models will often have different limits on the
-number of input plus output tokens it can accept. The input is often called the
-context, and the output is often called the completion.
+number of input plus output tokens it can accept. 
+- The input is often called the `context`, and 
+- the output is often called the `completion`.
 
 And the model GPT 3. 5 Turbo, for example, the most commonly used chat GPT
 model, has a limit of roughly 4,000 tokens in the input plus output.
 
 So if you try to feed it an input context that's much longer than this, it'll
-actually throw an exception or generate an error. Next, I want to share with
-you another powerful way to use an LLM API.
+actually throw an exception or generate an error. 
 
-Which involves specifying separate system, user, and assistant messages.
+### System, User, Assistant
 
-Let me show you an example, then we can explain in more detail what it's
-actually doing.
+Next, I want to share with you another powerful way to use an LLM API. Which
+involves _specifying separate system, user, and assistant messages_.
 
-Here's a new helper function called "get_completion_from_messages", and when we
+```python
+messages =  [  
+{'role':'system', 
+ 'content': "You are an assistant..."},    
+{'role':'user', 
+ 'content': "Tell me a joke"},
+{'role':'assistant', 
+ 'content': "Why did the chicken..."},
+]
+```
+
+- `system` sets behavior of assistand
+- `assistant` is the chat model
+- `user` is you
+
+Look at helper function called `get_completion_from_messages`, and when we
 prompt this LLM, we are going to give it multiple messages.
 
 Here's an example of what you can do. I'm going to specify first a message in
-the role of a system, so this is a system message, and the content of the
-system message is "You are an assistant who responds in the style of Dr.
+the role of a `system`, so this is a system message, and the content of the
+system message is "You are an assistant who responds in the style of Dr. Seuss. " 
 
-Seuss. " Then I'm going to specify a user message, so the role of the second
-message is "role : user", and the content of this is "write me a very short
-poem about a happy carrot".
+```python
+messages =  [  
+{'role':'system', 
+ 'content':"""You are an assistant who responds in the style of Dr Seuss."""},    
+{'role':'user', 
+ 'content':"""write me a very short poem about a happy carrot"""},  
+] 
+response = get_completion_from_messages(messages, temperature=1)
+print(response)
+```
+
+Then I'm going to specify a user message, so the role of the second message is
+"role : user", and the content of this is "write me a very short poem about a
+happy carrot".
 
 And so let's run that, and with "temperature = 1", I actually never know what's
 going to come out, but okay, that's a cool poem. "Oh, how jolly is this carrot
@@ -270,90 +267,23 @@ that you wanted to carry out given this higher level behavior that was
 specified in the system message.
 
 Here's an illustration of how it all works.
+- `system` sets tone/behavior of assistant
+- `assistant` returns the LLM response
+- `user` sets the prompts
 
- 
-So this is how the chat format works.
-
-The system message sets the overall tone of behavior of the Large Language
-Model or the assistant, and then when you give the user message, such as maybe,
-such as "Tell me a joke" or "Write me a poem", it will then output an
-appropriate response following what you asked for in the user message and
-consistent with the overall behavior set in the system message.
-
-And by the way, although I'm not illustrating it here, if you want to use this
-in a multi-term conversation, you can also input assistant messages in this
-messages format to let ChatGPT know what it had previously said if you wanted
-to continue the conversation based on things that it had previously said as
-well.
-
-But here are a few more examples.
+See code for a few more examples.
 
 If you want to set the tone, to tell it to have a one sentence long output,
 then in the system message, I can say all your responses must be one sentence
 long.
 
- 
-And when I execute this, it outputs a single sentence. It's no longer a poem,
-not in the style of Dr. Seuss, but it's a single sentence. There's a story
-about the happy carrot. And if we want to combine both, specify the style and
-the length, then I can use the system message to say, "You are an assistant who
-responds in the style of Dr. Seuss. All your sentences must be one sentence
-long. ". And now, this generates a nice one sentence poem.
+## Token count
 
-It was always smiling and never scary. I like that. That's a very happy poem.
+To view prompt, completion, and total tokens see the `token_dict` return
 
-And then lastly, just for fun, if you are using an LLM and you want to know how
-many tokens are you using, here's a helper function that is a little bit more
-sophisticated in that it gets a response from the OpenAI API endpoint and then
-it uses other values in the response to tell you how many prompt tokens,
-completion tokens, and total tokens were used in your API call. Let me define
-that.
+## Tip: Use dotenv
 
-And if I run this now, here's the response.
-
-And here is accounts of how many tokens we use.
-
-So this output, which had 55 tokens, whereas the prompt input had 37 tokens. So
-this used up 92 tokens altogether. When I'm using LL Models in practice, I
-don't worry that much, frankly, about the number of tokens I'm using.
-
- 
-Maybe one case where it might be worth checking the number of tokens is if
-you're worried that the user might have given you too long an input that
-exceeds the 4,000 or so token limits of ChatGPT, in which case you could double
-check how many tokens it was and truncate it to make sure you're staying within
-the input token limits of the large language model.
-
-Now, I want to share with you one more tip for how to use a Large Language
-Model.
-
-Commonly the OpenAI API requires using an API key that's tied to either a free
-or a paid account.
-
-And so many developers will write the API key in plain text like this into
-their Jupyter notebook.
-
-And this is a less secure way of using API keys that I would not recommend you
-use, because it's just too easy to share this notebook with someone else or
-check this into GitHub or something and thus end up leaking your API key to
-someone else.
-
-In contrast, what you saw me do in the Jupyter notebook was this piece of code,
-where I use a library "dotenv", and then run this command "load_dotenv",
-"find_dotenv" to read a local file which is called ". env" that contains my
-secret key. And so with this code snippet, I have locally stored a file called
-". env" that contains my API key. And this loads it into the operating systems
-environmental variable.
-
-And then "os. getenv, ('OPENAI_API_KEY')" stores it into this variable. And in
-this whole process, I don't ever have to enter the API key in plain text and
-unencrypted plain text into my Jupyter notebook.
-
- 
-So this is a relatively more secure and a better way to access the API key. And
-in fact, this is a general method for storing different API keys from lots of
-different online services that you might want to use and call from your Jupyter
-notebook.
+## Prompting is revolutionizing AI development
 
 Lastly, I think the degree to which prompting is revolutionizing AI application
 development is still underappreciated.
@@ -364,10 +294,10 @@ to build a classifier to classify restaurant review positive and negative
 sentiments, you at first get a bunch of label data, maybe hundreds of examples.
 This might take, I don't know, weeks, maybe a month.
 
-Then you would train a model on data and getting an appropriate open source
-model, tuning on the model, evaluating it.
+Then you would _train a model on data_ and _getting an appropriate open source
+model_, _tuning on the model_, _evaluating it_.
 
-That might take days, weeks, maybe even a few months.
+__That might take days, weeks, maybe even a few months.__
 
 And then you might have to find a cloud service to deploy it, and then get your
 model uploaded to the cloud, and then run the model, and finally be able to
