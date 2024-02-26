@@ -292,39 +292,42 @@ In the traditional supervised machine learning workflow, like the restaurant
 review sentiment classification example that I touched on just now, if you want
 to build a classifier to classify restaurant review positive and negative
 sentiments, you at first get a bunch of label data, maybe hundreds of examples.
-This might take, I don't know, weeks, maybe a month.
+_This might take, I don't know, weeks, maybe a month_.
 
 Then you would _train a model on data_ and _getting an appropriate open source
 model_, _tuning on the model_, _evaluating it_.
 
-__That might take days, weeks, maybe even a few months.__
+_That might take days, weeks, maybe even a few months._
 
 And then you might have to find a cloud service to deploy it, and then get your
 model uploaded to the cloud, and then run the model, and finally be able to
 call your model.
 
-And it's again not uncommon for this to take a team a few months to get
-working.
+And it's again not uncommon for this to take a team a _few months to get
+working_.
 
 In contrast with prompting-based machine learning, when you have a text
-application, you can specify a prompt.
+application, you can specify a prompt. This can take minutes, maybe hours, if
+you need to iterate a few times to get an effective prompt. 
 
-This can take minutes, maybe hours, if you need to iterate a few times to get
-an effective prompt. And then in hours, maybe at most days, but frankly more
-often hours, you can have this running using API calls and start making calls
-to the model. And once you've done that, in just again, maybe minutes or hours,
-you can start calling the model and start making inferences. And so there are
-applications that used to take me maybe six months or a year to build, that you
-can now build in minutes or hours, maybe very small numbers of days using
-prompting. And this is revolutionizing what AI applications can be built
-quickly.
+And then in hours, maybe at most days, but frankly more often hours, you can
+have this running using API calls and start making calls
+to the model. 
+
+And once you've done that, in just again, maybe minutes or hours, you can start
+calling the model and start making inferences. 
+
+And so there are applications that used to take me maybe six months or a year
+to build, that you can now build in minutes or hours, maybe very small numbers
+of days using prompting. And this is revolutionizing what AI applications can
+be built quickly.
 
 One important caveat, this applies to many unstructured data applications,
 including specifically text applications and maybe increasingly vision
 applications, although the vision technology is much less mature right now, but
 it's kind of getting there.
 
-This recipe doesn't really work for structured data applications, meaning
+This recipe _doesn't really work for structured data applications_, meaning
 machine learning applications on tabular data with lots of numerical values in
 Excel spreadsheets.
 
@@ -332,10 +335,3 @@ But for applications to which this does apply, the fact that AI components can
 be built so quickly, is changing the workflow of how the entire system might be
 built. Building an entire system might still take days or weeks or something,
 but at least this piece of it can be done much faster.
-
-And so with that, let's go on to the next video, where Isa will show how to use
-these components to evaluate the input to a customer service assistant.
-
-And this will be part of a bigger example that you see developed through this
-course, for building a customer service assistant for an online retailer.
-
